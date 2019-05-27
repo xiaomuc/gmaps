@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>地図検索（お手軽版）</title>
+    <style>
+        #right-panel {
+            font-family: 'Roboto', 'sans-serif';
+            line-height: 30px;
+            padding-left: 10px;
+        }
+
+        #right-panel select,
+        #right-panel input {
+            font-size: 15px;
+        }
+
+        #right-panel select {
+            width: 100%;
+        }
+
+        #right-panel i {
+            font-size: 12px;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%;
+            float: left;
+            width: 70%;
+            height: 100%;
+        }
+
+        #route {
+            width: 100%;
+            height: 100pt;
+        }
+
+        #right-panel {
+            margin: 20px;
+            border-width: 2px;
+            width: 20%;
+            height: 400px;
+            float: left;
+            text-align: left;
+            padding-top: 0;
+        }
+
+        #directions-panel {
+            margin-top: 10px;
+            background-color: #FFEE77;
+            padding: 10px;
+            overflow: scroll;
+            height: 74px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="right-panel">
+        <div>
+            <b>地点:</b>
+            <textarea id="route" width="100%">大阪市役所本庁舎&#13;大阪市北区役所&#13;大阪市都島区役所&#13;
+大阪市福島区役所&#13;
+大阪市天王寺区役所&#13;</textarea>
+            <br>
+            <b>交通手段:</b>
+            <input type="radio" name="travelMode" value="DRIVING" checked>車
+            <input type="radio" name="travelMode" value="TRANSIT">交通機関
+            <input type="radio" name="travelMode" value="WALKING">徒歩
+            <br>
+            <input type="submit" id="submit" value="経路検索">
+        </div>
+    </div>
+    <script>
+        // ロード時に呼ばれるコールバック関数
+        // 初期化を行っている
+        function initMap() {
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            // マップの指定
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: { lat: 34.694012, lng: 135.502202 }
+            });
+            directionsDisplay.setMap(map);
+
+            // 送信ボタンにイベント割当
+            document.getElementById('submit').addEventListener('click', function () {
+                calculateAndDisplayRoute(directionsService, directionsDisplay);
+            });
+        }
+        // TextAreaから行単位のテキスト抽出
+        function getSplitByLine(text) {
+            var lines = text.split('\n');
+            var outArray = new Array();
+
+            for (var i = 0; i < lines.length; i++) {
+                // 空行は無視する
+                if (lines[i] == '') {
+                    continue;
+                }
+
+                outArray.push(lines[i]);
+            }
+            return outArray;
+        }
+
+        //ルート検索
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            var waypts = [];
+            var startPoint, endPoint;
+            var text = document.getElementById('route').value;
+            var splitByLine = getSplitByLine(text);
+            if (splitByLine.length > 1) {
+                startPoint = splitByLine[0];
+                endPoint = splitByLine[splitByLine.length - 1];
+                for (var i = 1; i < splitByLine.length - 1; i++) {
+                    waypts.push({
+                        location: splitByLine[i],
+                        stopover: true
+                    });
+                }
+            } else {
+                window.alert("地点数が足りません。2箇所以上入力してください。");
+            }
+            // 交通手段を取得要素を取得
+            var elements = document.getElementsByName("travelMode");
+            var selectedMode = "DRIVING";
+            // 選択状態の値を取得
+            for (i = elements.length; i--;) {
+                if (elements[i].checked) {
+                    selectedMode = elements[i].value;
+                    break;
+                }
+            }
+            directionsService.route({
+                origin: startPoint,
+                destination: endPoint,
+                waypoints: waypts,
+                optimizeWaypoints: true,
+                travelMode: google.maps.TravelMode[selectedMode]
+            }, function (response, status) {
+                if (status === 'OK') {
+                    directionsDisplay.setDirections(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vsOV96S9pSlwX-Q73xbILpMeLg5SPMI&callback=initMap">
+        </script>
+</body>
+
+</html>

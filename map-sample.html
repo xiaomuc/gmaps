@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Map Directions</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="map.js"></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="right-panel">
+        <div>
+            <b>地点:</b>
+            <textarea id="route" width="100%">大阪市役所本庁舎&#13;大阪市北区役所&#13;大阪市都島区役所&#13;
+大阪市福島区役所&#13;
+大阪市天王寺区役所&#13;</textarea>
+            <br>
+            <b>交通手段:</b>
+            <input type="radio" name="travelMode" value="DRIVING" checked>車
+            <input type="radio" name="travelMode" value="TRANSIT">交通機関
+            <input type="radio" name="travelMode" value="WALKING">徒歩
+            <br>
+            <input type="submit" id="submit" value="経路検索">
+        </div>
+    </div>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vsOV96S9pSlwX-Q73xbILpMeLg5SPMI&callback=initMap">
+        </script>
+</body>
+
+</html>
