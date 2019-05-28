@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
+</head>
+
+<body class="fixed-sn light-blue-skin">
+    <!--Main Navigation-->
+    <header>
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark default-color">
+            <a class="navbar-brand" href="#"><strong>NTTDATA KANSAI</strong></a>
+        </nav>
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="accordion col-lg-2 col-md-3" id="accordionExample">
+                    <div class="card z-depth-0">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    検索条件
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                            data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="md-form">
+                                    <textarea id="route" class="md-textarea form-control"
+                                        rows="6">熊本市役所&#13;熊本中央区役所&#13;熊本市東区役所&#13;熊本市西区役所&#13;熊本市南区役所&#13;熊本市北区役所&#13;</textarea>
+                                    <label for="route">経路</label>
+                                </div>
+                                <p class="card-text">交通手段<br>
+                                    <select id="travelMode" class="custom-select custom-select-sm">
+                                        <option value="DRIVING">車</option>
+                                        <option value="TRANSIT">鉄道など</option>
+                                        <option value="WALKING">徒歩</option>
+                                    </select></p>
+                                <div class="text-center">
+                                    <button type="button" id="submit" class="btn btn-primary">経路検索</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--div class="col-md-9"-->
+                <!-- Card -->
+                <div class="card col-lg-10 col-md-9 col-sm-9">
+
+                    <!--Google map-->
+                    <div id="map" class="z-depth-1-half map-container" style="height: calc(100vh - 100px)">
+
+                    </div>
+
+                    <!-- Card content -->
+                    <div class="card-body closed px-0">
+                        <div class="white px-4 pb-4 pt-3-5">
+                            <div class="d-flex justify-content-between living-coral-text">
+                                <h6 class="card-subtitle font-weight-light" id="distance">dist</h6>
+                                <h6 class="font-small font-weight-light mt-n1" id="duration"></h6>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- Card -->
+                <!--/div-->
+            </div>
+        </div>
+    </main>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/js/mdb.min.js"></script>
+    <script src="map.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vsOV96S9pSlwX-Q73xbILpMeLg5SPMI&callback=initMap">
+        </script>
+
+</body>
+
+</html>
