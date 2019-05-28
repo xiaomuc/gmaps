@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-        #main{
+        #main {
             padding-top: 0;
         }
+
         #content {
             overflow: auto;
             height: fit-content;
@@ -27,10 +28,12 @@
             width: 100%;
             height: 25vh;
         }
-        #map{
+
+        #map {
             height: 90vh;
         }
-        #navi{
+
+        #navi {
             height: fit-content;
         }
     </style>
@@ -45,7 +48,8 @@
         <div class="row">
             <div class="col-md-3 col-sm-4" id="left-panel">
                 <label class="panel panel-primary">経路</label>
-                <textarea id="route">大阪市役所本庁舎&#13;大阪市北区役所&#13;大阪市都島区役所&#13;大阪市福島区役所&#13;大阪市天王寺区役所&#13;</textarea>
+                <textarea id="route"
+                    width="100%">熊本市役所&#13;熊本中央区役所&#13;熊本市東区役所&#13;熊本市西区役所&#13;熊本市南区役所&#13;熊本市北区役所&#13;</textarea>
                 <label class="panel panel-primary">交通手段</label>
                 <div class="btn-group-vertical btn-group-toggle w-100" data-toggle="buttons">
                     <label class="btn btn-secondary active">
@@ -59,6 +63,12 @@
                     </label>
                 </div>
                 <button type="button" id="submit" class="mt-2 mb-2 btn btn-lg btn-primary w-100">経路検索</button>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-xs-6 text-info" id="duration"></div>
+                        <div class="col-lg-6 col-md-12 col-xs-6 text-info" id="distance"></div>
+                    </div>
+                </div>
             </div>
             <div id="content" class="col-md-9 col-sm-8">
                 <div id="map" class="vha-100">map</div>

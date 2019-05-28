@@ -70,9 +70,7 @@
     <div id="right-panel">
         <div>
             <b>地点:</b>
-            <textarea id="route" width="100%">大阪市役所本庁舎&#13;大阪市北区役所&#13;大阪市都島区役所&#13;
-大阪市福島区役所&#13;
-大阪市天王寺区役所&#13;</textarea>
+            <textarea id="route" width="100%">熊本市役所&#13;熊本中央区役所&#13;熊本市東区役所&#13;熊本市西区役所&#13;熊本市南区役所&#13;熊本市北区役所&#13;</textarea>
             <br>
             <b>交通手段:</b>
             <input type="radio" name="travelMode" value="DRIVING" checked>車
@@ -80,6 +78,10 @@
             <input type="radio" name="travelMode" value="WALKING">徒歩
             <br>
             <input type="submit" id="submit" value="経路検索">
+            <hr>
+            <label>時間</label><input type="text" style="text-align:right" readonly id="duration">
+            <label>距離</label><input type="text" style="text-align:right" readonly id="distance">
+
         </div>
     </div>
     <script>
@@ -91,7 +93,7 @@
             // マップの指定
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 15,
-                center: { lat: 34.694012, lng: 135.502202 }
+                center: { lat: 32.803198, lng: 130.707875 }
             });
             directionsDisplay.setMap(map);
 
@@ -115,7 +117,17 @@
             }
             return outArray;
         }
-
+        function sec2hour(time) {
+            var sec = (time % 60) % 60;
+            var min = Math.floor(time / 60) % 60;
+            var hour = Math.floor(time / 3600);
+            var res = "";
+            if (hour > 0) {
+                res = hour + "時間";
+            }
+            res = res + min + "分";
+            return res;
+        }
         //ルート検索
         function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             var waypts = [];
@@ -153,6 +165,15 @@
             }, function (response, status) {
                 if (status === 'OK') {
                     directionsDisplay.setDirections(response);
+                    var totalDistance = 0;
+                    var totalDuration = 0;
+                    var legs = response.routes[0].legs;
+                    for (var i = 0; i < legs.length; i++) {
+                        totalDistance += legs[i].distance.value;
+                        totalDuration += legs[i].duration.value;
+                    }
+                    document.getElementById("duration").value = sec2hour(totalDuration);
+                    document.getElementById("distance").value = totalDistance / 1000 +"km";
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }

@@ -7,7 +7,7 @@ function initMap() {
     // 大阪市役所本庁舎　〒530-0005 大阪府大阪市北区中之島１丁目３−２０ 34.694012, 135.502202
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 15,
-        center: { lat: 34.694012, lng: 135.502202 }
+        center: { lat: 32.803198, lng: 130.707875 }
     });
     directionsDisplay.setMap(map);
 
@@ -31,7 +31,17 @@ function getSplitByLine(text) {
     }
     return outArray;
 }
-
+function sec2hour(time) {
+    var sec = (time % 60) % 60;
+    var min = Math.floor(time / 60) % 60;
+    var hour = Math.floor(time / 3600);
+    var res = "";
+    if (hour > 0) {
+        res = hour + "時間";
+    }
+    res = res + min + "分";
+    return res;
+}
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     var waypts = [];
     var startPoint, endPoint;
@@ -84,7 +94,16 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     }, function (response, status) {
         if (status === 'OK') {
             directionsDisplay.setDirections(response);
-            /*
+            var totalDistance = 0;
+            var totalDuration = 0;
+            var legs = response.routes[0].legs;
+            for (var i = 0; i < legs.length; i++) {
+                totalDistance += legs[i].distance.value;
+                totalDuration += legs[i].duration.value;
+            }
+            document.getElementById("duration").innerHTML ="総時間："+ sec2hour(totalDuration);
+            document.getElementById("distance").innerHTML ="総距離："+ totalDistance / 1000 +"km";
+/*
                         var route = response.routes[0];
                         var summaryPanel = document.getElementById('directions-panel');
                         summaryPanel.innerHTML = '';
