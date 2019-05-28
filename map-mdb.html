@@ -5,45 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>地図検索（マテリアル）</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
-</head>
+    <style>
+        /* Icon when the collapsible content is shown */
+        .panel-heading a:after {
+            font-family: "Glyphicons Halflings";
+            content: "\e114";
+            float: right;
+            margin-left: 15px;
+        }
+        /* Icon when the collapsible content is hidden */
+        .panel-heading a.collapsed:after {
+            content: "\e080";
+        }
+    </style></head>
 
 <body class="fixed-sn light-blue-skin">
     <!--Main Navigation-->
     <header>
         <!--Navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark default-color">
-            <a class="navbar-brand" href="#"><strong>NTTDATA KANSAI</strong></a>
+        <nav class="navbar navbar-expand-lg navbar-dark default-color pb-2">
+            <a class="navbar-brand" href="#">NTTDATA KANSAI</a>
         </nav>
     </header>
     <main>
         <div class="container-fluid">
             <div class="row">
-                <div class="accordion col-lg-2 col-md-3" id="accordionExample">
-                    <div class="card z-depth-0">
-                        <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse"
-                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    検索条件
-                                </button>
-                            </h5>
+                <div class="panel-info col-lg-2 col-md-3 col-sm-3" id="accordionExample">
+                    <div class="panel-heading">
+                        <div class="panel-title" id="headingOne">
+                            <a href="#panelCollapse" data-toggle="collapse">検索条件</a>
                         </div>
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                            data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="md-form">
-                                    <textarea id="route" class="md-textarea form-control"
+                        <div class="panel-body">
+                            <div id="panelCollapse" class="collapse">
+                                <div class="md-form my-2">
+                                    <textarea id="route" class="md-textarea form-control py-2"
                                         rows="6">熊本市役所&#13;熊本中央区役所&#13;熊本市東区役所&#13;熊本市西区役所&#13;熊本市南区役所&#13;熊本市北区役所&#13;</textarea>
                                     <label for="route">経路</label>
                                 </div>
-                                <p class="card-text">交通手段<br>
+                                <p class="card-text mb-1">交通手段<br>
                                     <select id="travelMode" class="custom-select custom-select-sm">
                                         <option value="DRIVING">車</option>
                                         <option value="TRANSIT">鉄道など</option>
@@ -97,7 +103,11 @@
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vsOV96S9pSlwX-Q73xbILpMeLg5SPMI&callback=initMap">
         </script>
-
+    <script>
+        $(function(){
+            $("#panelCollapse").collapse('show');
+        });
+    </script>
 </body>
 
 </html>

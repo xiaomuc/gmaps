@@ -59,23 +59,14 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     } else {
         window.alert("地点数が足りません。2箇所以上入力してください。");
     }
-    /*
-        var checkboxArray = document.getElementById('waypoints');
-        for (var i = 0; i < checkboxArray.length; i++) {
-            if (checkboxArray.options[i].selected) {
-                waypts.push({
-                    location: checkboxArray[i].value,
-                    stopover: true
-                });
-            }
-        }
-    */
+    
     // 要素を取得
-    var elements = document.getElementsByName("travelMode");
+    var element = document.getElementById("travelMode");
+    var elements = element.options;
     var selectedMode = "DRIVING";
     // 選択状態の値を取得
     for (i = elements.length; i--;) {
-        if (elements[i].checked) {
+        if (elements[i].selected || elements[i].checked) {
             selectedMode = elements[i].value;
             break;
         }
