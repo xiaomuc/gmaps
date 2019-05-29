@@ -14,6 +14,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet">
     <style>
         /* Icon when the collapsible content is shown */
+        
         .panel-heading a:after {
             font-family: "Glyphicons Halflings";
             content: "\e114";
@@ -21,10 +22,12 @@
             margin-left: 15px;
         }
         /* Icon when the collapsible content is hidden */
+        
         .panel-heading a.collapsed:after {
             content: "\e080";
         }
-    </style></head>
+    </style>
+</head>
 
 <body class="fixed-sn light-blue-skin">
     <!--Main Navigation-->
@@ -45,8 +48,7 @@
                         <div class="panel-body">
                             <div id="panelCollapse" class="collapse">
                                 <div class="md-form my-2">
-                                    <textarea id="route" class="md-textarea form-control py-2"
-                                        rows="6">熊本市役所&#13;熊本中央区役所&#13;熊本市東区役所&#13;熊本市西区役所&#13;熊本市南区役所&#13;熊本市北区役所&#13;</textarea>
+                                    <textarea id="route" class="md-textarea form-control py-2" rows="6">熊本市役所&#13;熊本市東区役所&#13;熊本市西区役所&#13;熊本市南区役所&#13;熊本市北区役所&#13;熊本中央区役所&#13;</textarea>
                                     <label for="route">経路</label>
                                 </div>
                                 <p class="card-text mb-1">交通手段<br>
@@ -54,7 +56,13 @@
                                         <option value="DRIVING">車</option>
                                         <option value="TRANSIT">鉄道など</option>
                                         <option value="WALKING">徒歩</option>
-                                    </select></p>
+                                    </select>
+                                    <div class="custom-checkbox">
+                                        <label>
+                                        <input id="optimize" type="checkbox" checked>経由地最適化
+                                    </label>
+                                    </div>
+                                </p>
                                 <div class="text-center">
                                     <button type="button" id="submit" class="btn btn-primary">経路検索</button>
                                 </div>
@@ -75,7 +83,7 @@
                     <div class="card-body closed px-0">
                         <div class="white px-4 pb-4 pt-3-5">
                             <div class="d-flex justify-content-between living-coral-text">
-                                <h6 class="card-subtitle font-weight-light" id="distance">dist</h6>
+                                <h6 class="card-subtitle font-weight-light" id="distance"></h6>
                                 <h6 class="font-small font-weight-light mt-n1" id="duration"></h6>
                             </div>
                         </div>
@@ -91,20 +99,16 @@
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/js/mdb.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/js/mdb.min.js"></script>
     <script src="map.js"></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vsOV96S9pSlwX-Q73xbILpMeLg5SPMI&callback=initMap">
-        </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vsOV96S9pSlwX-Q73xbILpMeLg5SPMI&callback=initMap">
+    </script>
     <script>
-        $(function(){
+        $(function() {
             $("#panelCollapse").collapse('show');
         });
     </script>
