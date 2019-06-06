@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>地図上にマーカー表示</title>
+    <style>
+        #map {
+            width: 100vw;
+            height: 100vh;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Google Maps -->
+    <script src="maps-marker.js"></script>
+    <script src="places.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vsOV96S9pSlwX-Q73xbILpMeLg5SPMI&callback=initMap">
+    </script>
+</body>
+
+</html>
