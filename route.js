@@ -12,11 +12,12 @@ function initMap() {
     directionsDisplay.setMap(map);
 
     // 送信ボタンにイベント割当
-    document.getElementById('submit').addEventListener('click', function() {
+    document.getElementById('submit').addEventListener('click', function () {
         calculateAndDisplayRoute(directionsService, directionsDisplay);
     });
 }
 
+// textareaを行単位で切り出す
 function getSplitByLine(text) {
     var lines = text.split('\n');
     var outArray = new Array();
@@ -32,22 +33,31 @@ function getSplitByLine(text) {
     return outArray;
 }
 
+// 時刻表記に変換
 function sec2hour(time) {
     var sec = (time % 60) % 60;
     var min = Math.floor(time / 60) % 60;
-    var hour = Math.floor(time / 3600);
+    var hour = Math.floor(time / 3600) % 24;
+    var days = Math.floor(time / (24 * 60 * 60));
     var res = "";
-    if (hour > 0) {
-        res = hour + "時間";
+    if (days > 0) {
+        res = days + "日"
+    }
+    if (days > 0 || hour > 0) {
+        res = res + hour + "時間";
     }
     res = res + min + "分";
     return res;
 }
 
+// 経路検索
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     var waypts = [];
+    //  開始点
     var startPoint = $("#start").val();
+    //  目的地
     var endPoint = $("#dist").val();
+    //  交通手段
     var selectedMode = $("input[name=travelMode]:checked").val();
     if (selectedMode != "TRANSIT") {
         var text = $('#waypoint').val();
@@ -59,19 +69,17 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             });
         }
     }
+    //  経由地最適化オプション
     var optimize = $("#optimize").prop('checked');
-    //selectedMode = document.getElementById('mode').value;
+
+    //  ルート検索
     directionsService.route({
-        //        origin: document.getElementById('start').value,
         origin: startPoint,
-        //        destination: document.getElementById('end').value,
         destination: endPoint,
         waypoints: waypts,
         optimizeWaypoints: optimize,
-        //        travelMode: travelMode
         travelMode: google.maps.TravelMode[selectedMode]
-            //travelMode: 'TRANSIT'
-    }, function(response, status) {
+    }, function (response, status) {
         if (status === 'OK') {
             directionsDisplay.setDirections(response);
             var totalDistance = 0;
@@ -82,27 +90,10 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
                 totalDuration += legs[i].duration.value;
             }
             $("#dlg-message").text('');
-            $("#exampleModal").modal('toggle');
+            $("#routeModal").modal('toggle');
             $("#duration").text('総時間：' + sec2hour(totalDuration));
             $("#distance").text('総距離：' + totalDistance / 1000 + 'km');
-            //            document.getElementById("duration").innerHTML = "総時間：" + sec2hour(totalDuration);
-            //document.getElementById("distance").innerHTML = "総距離：" + totalDistance / 1000 + "km";
-            /*
-                                    var route = response.routes[0];
-                                    var summaryPanel = document.getElementById('directions-panel');
-                                    summaryPanel.innerHTML = '';
-                                    // For each route, display summary information.
-                                    for (var i = 0; i < route.legs.length; i++) {
-                                        var routeSegment = i + 1;
-                                        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                                            '</b><br>';
-                                        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-                                        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                                        summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-                                    }
-                                */
         } else {
-            //window.alert('Directions request failed due to ' + status);
             $("#dlg-message").text('Error: ' + status)
         }
     });

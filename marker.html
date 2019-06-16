@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>google maps route</title>
+    <title>google maps marker</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet"
         href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
         integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <link href="main.css" rel="stylesheet">
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
@@ -25,26 +24,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar-collapse-01">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="route.html">
                         <i class="material-icons menu-icon">search</i>route</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="marker.html">
                         <i class="material-icons menu-icon">place</i>marker</a>
                 </li>
             </ul>
-
         </div>
     </nav>
     <div class="container-fluid">
         <!-- Modal -->
-        <div class="modal fade" id="routeModal" tabindex="-1" role="dialog" aria-labelledby="routeModalLabel"
+        <div class="modal fade" id="markerModal" tabindex="-1" role="dialog" aria-labelledby="markerModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title" id="routeModalLabel">経路検索</h6>
+                        <h6 class="modal-title" id="markerModalLabel">マーカー追加</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -52,47 +50,64 @@
                     <div class="modal-body container">
                         <form action="#">
                             <div class="form-group">
-                                <label for="start" class="col-form-label">出発地</label>
-                                <input type="text" class="form-control" id="start">
+                                <label for="address" class="bmd-label-floating">場所（住所）</label>
+                                <input type="text" class="form-control" id="address" value="横浜駅">
                             </div>
                             <div class="form-group">
-                                <label for="waypoint" class="col-form-label">経由地</label>
-                                <textarea class="form-contorl" id="waypoint"></textarea>
+                                <label for="title" class="bmd-label-floating">名称</label>
+                                <input type="text" class="form-control" id="title" value="横浜">
                             </div>
                             <div class="form-group">
-                                <label for="dist" class="col-form-label">目的地</label>
-                                <input type="text" class="form-control input-lg" id="dist">
+                                <label for="description" class="bmd-label-floating">説明</label>
+                                <input type="text" class="form-control" id="description" value="横浜だぜ">
                             </div>
-
-                            <label>交通手段：</label>
-                            <label class="radio-inline">
-                                <input type="radio" name="travelMode" id="inlineRadio1" checked value="DRIVING">車
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="travelMode" id="inlineRadio2" value="TRANSIT">交通機関
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="travelMode" id="inlineRadio3" value="WALKING">徒歩
-                            </label>
-                            <div class="switch">
-                                <label>
-                                    <input id="optimize" type="checkbox" checked>
-                                    経由地最適化
-                                </label>
+                            <div class="form-group">
+                                <label for="url" class="bmd-label-floating">url</label>
+                                <input type="text" class="form-control" id="url"
+                                    value="https://www.jreast.co.jp/estation/stations/1638.html">
+                            </div>
+                            <div class="form-group">
+                                <label for="icon">アイコン</label>
+                                <select id="icon" class="form-control">
+                                    <option selected value="">Choose...</option>
+                                    <option>red</option>
+                                    <option>red-dot</option>
+                                    <option>yellow</option>
+                                    <option>yellow-dot</option>
+                                    <option>blue</option>
+                                    <option>blue-dot</option>
+                                    <option>green</option>
+                                    <option>green-dot</option>
+                                    <option>lightblue</option>
+                                    <option>lightblue-dot</option>
+                                    <option>orange</option>
+                                    <option>orange-dot</option>
+                                    <option>pink</option>
+                                    <option>pink-dot</option>
+                                    <option>purple</option>
+                                    <option>purple-dot</option>
+                                    <option>red-pushpin</option>
+                                    <option>ylw-pushpin</option>
+                                    <option>blue-pushpin</option>
+                                    <option>grn-pushpin</option>
+                                    <option>ltblu-pushpin</option>
+                                    <option>pink-pushpin</option>
+                                    <option>purple-pushpin</option>
+                                </select>
                             </div>
                         </form>
                         <div id="dlg-message"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                        <button id="submit" type="button" class="btn btn-primary">経路検索</button>
+                        <button id="submit" type="button" class="btn btn-primary">追加</button>
                     </div>
                 </div>
             </div>
         </div>
         <button id="search" type="button" class="btn btn-primary bmd-btn-fab" data-toggle="modal"
-            data-target="#routeModal">
-            <i class="material-icons">search</i>
+            data-target="#markerModal" title="マーカーの追加">
+            <i class="material-icons">add_location</i>
         </button>
         <h5><span id="distance" class="badge badge-success"></span>
             <span id="duration" class="badge badge-success"></span></h5>
@@ -109,22 +124,13 @@
     <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
         integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
         crossorigin="anonymous"></script>
-    <script src="route.js"></script>
+    <script src="maps-marker.js"></script>
     <script src="places.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vsOV96S9pSlwX-Q73xbILpMeLg5SPMI&callback=initMap"></script>
     <script>
         $(function () {
             $('body').bootstrapMaterialDesign();
-            $('.bmd-form-group').attr('padding-top', '10px');
-
-            $('#start').val(places[0].address);
-            for (var i = 1; i < places.length - 1; i++) {
-                $('#waypoint').append(places[i].address + "\n");
-
-            }
-            $('#dist').val(places[places.length - 1].address);
-            $("#routeModal").modal('toggle');
         });
         $(window).on('load resize', function () {
             nh = $('nav').height();
@@ -133,13 +139,16 @@
             mh = wh - nh - cp;
             $('#map').height(mh)
         });
-        $('input[name=travelMode]:radio').change(function () {
-            var radioval = $(this).val();
-            if (radioval == 'TRANSIT') {
-                $('#waypoint').attr('disabled', 'disabled');
-            } else {
-                $('#waypoint').removeAttr('disabled');
-            }
+        $('#submit').click(function () {
+            var place = {
+                "address": $('#address').val(),
+                "title": $('#title').val(),
+                "icon": $('#icon').val(),
+                "description": $('#description').val(),
+                "url": $('#url').val()
+            };
+            setMarker(place);
+            $("#markerModal").modal('toggle');
         });
     </script>
 </body>
