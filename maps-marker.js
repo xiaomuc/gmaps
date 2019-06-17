@@ -19,9 +19,9 @@ function initMap() {
     geocoder = new google.maps.Geocoder();
     infowindow = new google.maps.InfoWindow();
 
-    //placesオブジェクト(places.js)に登録された位置からマーカーを生成する
-    for (var i = 0; i < places.length; i++) {
-        setMarker(places[i]);
+    //markersオブジェクト(places.js)に登録された位置からマーカーを生成する
+    for (var i = 0; i < markers.length; i++) {
+        setMarker(markers[i]);
     }
     google.maps.event.addListener(map, "click", function (event) {
         infowindow.close();
@@ -59,7 +59,7 @@ function setMarker(place) {
         //正常に位置が取得さた場合
         if (status == google.maps.GeocoderStatus.OK) {
             //情報ウィンドウ生成
-            var icon_path = (place.icon != "") ? "http://maps.google.com/mapfiles/ms/icons/" + place.icon + ".png" : null;
+            var icon_path = (place.icon !== void 0 && place.icon != "") ? "http://maps.google.com/mapfiles/ms/icons/" + place.icon + ".png" : null;
             //マーカー生成
             var marker = new google.maps.Marker({
                 position: results[0].geometry.location,
@@ -67,7 +67,8 @@ function setMarker(place) {
                 icon: icon_path,
                 map: map,
                 content: "<h1><a href='" +
-                    place.url + "'>" + place.title + "</a></h1><p>" + place.description + "</p>" +
+                    place.url + "'>" + place.title + "</a></h1><p><h5>" + place.description + "</h5></p>" +
+                    "<p>" + results[0].formatted_address + "</p>" +
                     "<p>icon: <img src='" + icon_path + "'><strong>" + place.icon + "</strong></p>"
             });
             //クリックイベントで情報ウィンドウを開く
